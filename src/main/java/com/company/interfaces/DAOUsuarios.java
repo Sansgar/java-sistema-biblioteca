@@ -16,5 +16,6 @@ public interface DAOUsuarios {
     public void modificar(UsuariosM user);
     public void eliminar(int userId);
     public List<UsuariosM> listar(String name);
+    public UsuariosM obtenerUsuarioPorId(int id);
     
 }

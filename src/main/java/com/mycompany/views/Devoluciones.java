@@ -4,6 +4,16 @@
  */
 package com.mycompany.views;
 
+import com.company.interfaces.DAOLibros;
+import com.company.interfaces.DAOPrestamos;
+import com.company.interfaces.DAOUsuarios;
+import com.mycompany.ilibreria.DAOLibrosImpl;
+import com.mycompany.ilibreria.DAOPrestamosImpl;
+import com.mycompany.ilibreria.DAOUsuariosImpl;
+import com.mycompany.models.LibrosM;
+import com.mycompany.models.PrestamosM;
+import com.mycompany.models.UsuariosM;
+import com.mycompany.utils.utils;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -90,6 +100,11 @@ public class Devoluciones extends javax.swing.JPanel {
 
         jButton1.setText("Devolver");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         subtitulo.setText("Devolucion de Libro");
 
@@ -158,6 +173,53 @@ public class Devoluciones extends javax.swing.JPanel {
             .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String folioId = folioU.getText().trim();
+        String bookId = libroID.getText().trim();
+        
+        try {
+            if (!utils.validarIds(folioId, bookId)){
+            return;
+            }
+        
+            DAOUsuarios daoUsuario = new DAOUsuariosImpl();
+            UsuariosM usuarioPrestamo = daoUsuario.obtenerUsuarioPorId(Integer.parseInt(folioId));
+            if (usuarioPrestamo.getName() == null){
+                JOptionPane.showMessageDialog(this, "No se encontro ningun usuario con ese folio.", "AVISO", 0);
+                folioU.requestFocus();
+                return;
+            }               
+            
+            DAOLibros daoLibro = new DAOLibrosImpl();
+            LibrosM libroPrestamo = daoLibro.obtenerLibroPorId(Integer.parseInt(bookId));
+            if (libroPrestamo.getTitle() == null){
+                JOptionPane.showMessageDialog(this, "No se encontro ningun libro con ese numero.", "AVISO", 0);
+                libroID.requestFocus();
+                return;
+            }
+            
+            //Validar si el usuario tiene devoluciones pendientes
+            PrestamosM prestamo = new PrestamosM();
+            DAOPrestamos DAOprestamo = new DAOPrestamosImpl();
+            prestamo = DAOprestamo.obtenerPrestamo(usuarioPrestamo.getId(), libroPrestamo.getId());
+            if (prestamo == null){
+                JOptionPane.showMessageDialog(this, "No hay prestamo a devolver.", "AVISO", 0);
+                libroID.requestFocus();
+                return;
+            }
+        
+            prestamo.setDate_return(utils.fechaActual());
+        
+            DAOprestamo.devolver(prestamo);
+            libroPrestamo.setAvailable(libroPrestamo.getAvailable() + 1);
+            daoLibro.modificar(libroPrestamo);
+            JOptionPane.showMessageDialog(null, "Devolucion Realizada Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al devolver el libro.", "AVISO", 0);
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

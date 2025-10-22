@@ -100,5 +100,30 @@ public class DAOUsuariosImpl extends Database implements DAOUsuarios{
         }
         return lista;
     }
-    
+
+    @Override
+    public UsuariosM obtenerUsuarioPorId(int id) {
+        UsuariosM user = new UsuariosM();
+        try {
+            this.Conectar();
+            PreparedStatement pst = this.coneccion.prepareStatement("SELECT * FROM users WHERE id=?;");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setLast_name(rs.getString("last_name"));
+                user.setDomicilio(rs.getString("domicilio"));
+                user.setTel(rs.getString("tel"));
+                user.setSanctions(rs.getInt("sanctions"));
+                user.setSanc_money(rs.getInt("sanc_money"));
+            }
+            pst.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        } finally{
+            this.Cerrar();
+        }
+        return user;
+    }
 }

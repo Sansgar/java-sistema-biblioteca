@@ -16,4 +16,5 @@ public interface DAOLibros {
     public void modificar(LibrosM book);
     public void eliminar(int bookId);
     public List<LibrosM> listar(String title);
+    public LibrosM obtenerLibroPorId(int id);
 }

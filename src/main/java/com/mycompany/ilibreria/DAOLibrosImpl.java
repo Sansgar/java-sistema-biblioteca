@@ -48,7 +48,7 @@ public class DAOLibrosImpl extends Database implements DAOLibros {
         try {
             this.Conectar();
             
-            PreparedStatement pst = this.coneccion.prepareStatement("UPDATE users SET title = ?, date = ?, author = ?, category = ?, edit = ?, lang = ?, pages = ?, description = ?, stock = ?, available = ?, ISBN = ? WHERE id = ?");
+            PreparedStatement pst = this.coneccion.prepareStatement("UPDATE books SET title = ?, date = ?, author = ?, category = ?, edit = ?, lang = ?, pages = ?, description = ?, stock = ?, available = ?, ISBN = ? WHERE id = ?");
             pst.setString(1, book.getTitle());
             pst.setString(2, book.getDate());
             pst.setString(3, book.getAuthor());
@@ -118,6 +118,37 @@ public class DAOLibrosImpl extends Database implements DAOLibros {
             this.Cerrar();
         }
         return lista;
+    }
+
+    @Override
+    public LibrosM obtenerLibroPorId(int id) {
+        LibrosM libro = new LibrosM();
+        try {
+            this.Conectar();
+            PreparedStatement pst = this.coneccion.prepareStatement("SELECT * FROM books WHERE id=?;");
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                libro.setId(rs.getInt("id"));
+                libro.setTitle(rs.getString("title"));
+                libro.setDate(rs.getString("date"));
+                libro.setAuthor(rs.getString("author"));
+                libro.setCategory(rs.getString("category"));
+                libro.setEdit(rs.getString("edit"));
+                libro.setLang(rs.getString("lang"));
+                libro.setPages(rs.getInt("pages"));
+                libro.setDescription(rs.getString("description"));
+                libro.setStock(rs.getInt("stock"));
+                libro.setAvailable(rs.getInt("available"));
+                libro.setISBN(rs.getString("ISBN")); 
+            }
+            pst.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        } finally{
+            this.Cerrar();
+        }
+        return libro;
     }
     
 }

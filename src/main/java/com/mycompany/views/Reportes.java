@@ -4,6 +4,10 @@
  */
 package com.mycompany.views;
 
+import com.company.interfaces.DAOPrestamos;
+import com.mycompany.ilibreria.DAOPrestamosImpl;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author sbeck
@@ -16,6 +20,7 @@ public class Reportes extends javax.swing.JPanel {
     public Reportes() {
         initComponents();
         InitStyles();
+        cargarPrestamos();
     }
     
     private void InitStyles(){
@@ -43,10 +48,7 @@ public class Reportes extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "User Id", "Book Id", "Fecha de Salida", "Fecha de Entrega"
@@ -67,6 +69,8 @@ public class Reportes extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTable1.setShowGrid(true);
         jScrollPane1.setViewportView(jTable1);
 
         jButtonActualizar.setText("Actualizar");
@@ -113,6 +117,16 @@ public class Reportes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 
+    public void cargarPrestamos(){
+        try {
+            DAOPrestamos dao = new DAOPrestamosImpl();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            dao.listar().forEach((u) -> model.addRow(new Object[]{u.getUser_id(),u.getBook_id(),u.getDate_out(),u.getDate_return()}));
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel background;
     private javax.swing.JButton jButtonActualizar;

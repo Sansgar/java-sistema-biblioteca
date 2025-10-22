@@ -12,7 +12,8 @@ import java.util.List;
  * @author sbeck
  */
 public interface DAOPrestamos {
-    public void registrar(PrestamosM prestamo);
-    public void modificar(PrestamosM prestamo);
+    public void prestar(PrestamosM prestamo);
+    public void devolver(PrestamosM prestamo);
+    public PrestamosM obtenerPrestamo (int userId, int bookId);
     public List<PrestamosM> listar();
 }
