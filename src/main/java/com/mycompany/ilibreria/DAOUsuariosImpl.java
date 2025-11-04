@@ -12,12 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author sbeck
  */
 public class DAOUsuariosImpl extends Database implements DAOUsuarios{
+    final int DUPLICATE_KEY_ERROR_CODE = 1062;
 
     @Override
     public void registrar(UsuariosM user) {
@@ -29,8 +31,12 @@ public class DAOUsuariosImpl extends Database implements DAOUsuarios{
             pst.setString(3, user.getDomicilio());
             pst.setString(4, user.getTel());
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuario Registrado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
+             if ( ((SQLException)e).getErrorCode() == DUPLICATE_KEY_ERROR_CODE) {
+                JOptionPane.showMessageDialog(null, "No puede haber numeros de telefono duplicado!", "AVISO", 0);
+             }
         } finally {
             this.Cerrar();
         }
@@ -48,7 +54,11 @@ public class DAOUsuariosImpl extends Database implements DAOUsuarios{
             pst.setString(4, user.getTel());
             pst.setInt(5, user.getId());
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Usuario Modificado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (ClassNotFoundException | SQLException e) {
+            if ( ((SQLException)e).getErrorCode() == DUPLICATE_KEY_ERROR_CODE) {
+                JOptionPane.showMessageDialog(null, "No puede haber numeros de telefono duplicado!", "AVISO", 0);
+            }
             System.out.println(e.getMessage());
         } finally {
             this.Cerrar();

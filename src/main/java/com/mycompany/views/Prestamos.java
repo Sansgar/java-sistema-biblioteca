@@ -14,12 +14,9 @@ import com.mycompany.models.LibrosM;
 import com.mycompany.models.PrestamosM;
 import com.mycompany.models.UsuariosM;
 import com.mycompany.utils.utils;
-import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -35,6 +32,7 @@ public class Prestamos extends javax.swing.JPanel {
     public Prestamos() {
         initComponents();
         InitStyles();
+        initImage();
     }
     
     private void InitStyles(){
@@ -44,15 +42,24 @@ public class Prestamos extends javax.swing.JPanel {
         folioU.putClientProperty("FlatLaf.styleClass", "h4");
         libroID.putClientProperty("FlatLaf.styleClass", "h4");
         jButton1.putClientProperty("FlatLaf.styleClass", "h4");
-        try {
-            BufferedImage originalImage = ImageIO.read(new File("C:\\Users\\sbeck\\OneDrive\\Documentos\\NetBeansProjects\\ILibreria\\src\\main\\resources\\Lending.png"));
-            int desiredWidth = 400;
-            int desiredHeight = 280;
-            Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-            imagen.setIcon(new ImageIcon(resizedImage));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
+    }
+    
+    private void initImage(){
+        imagen.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Se asegura de que solo se ejecute una vez, cuando las dimensiones sean mayores que 0
+                if (imagen.getWidth() > 0 && imagen.getHeight() > 0) {
+                    // Carga la imagen 
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Lending.png"));
+                    Image resizedImage = icon.getImage().getScaledInstance(imagen.getWidth(), imagen.getHeight(), Image.SCALE_SMOOTH);
+                    imagen.setIcon(new ImageIcon(resizedImage));
+    
+                    // Remueve el listener una vez que el icono ha sido establecido
+                    imagen.removeComponentListener(this);
+                }
+            }
+        });
     }
 
     /**
@@ -63,6 +70,7 @@ public class Prestamos extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         background = new javax.swing.JPanel();
         imagen = new javax.swing.JLabel();
@@ -77,27 +85,105 @@ public class Prestamos extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(750, 430));
 
-        imagen.setPreferredSize(new java.awt.Dimension(393, 430));
+        background.setMinimumSize(new java.awt.Dimension(750, 370));
+        background.setPreferredSize(new java.awt.Dimension(750, 370));
+        background.setLayout(new java.awt.GridBagLayout());
+
+        imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        imagen.setMinimumSize(new java.awt.Dimension(405, 270));
+        imagen.setPreferredSize(new java.awt.Dimension(405, 270));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 9;
+        gridBagConstraints.weightx = 0.5;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 10);
+        background.add(imagen, gridBagConstraints);
 
         jSeparator1.setBackground(new java.awt.Color(15, 110, 86));
         jSeparator1.setForeground(new java.awt.Color(15, 110, 86));
         jSeparator1.setToolTipText("");
         jSeparator1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
         jSeparator1.setPreferredSize(new java.awt.Dimension(280, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(5, 6, 0, 30);
+        background.add(jSeparator1, gridBagConstraints);
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Folio Usuario");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 30);
+        background.add(jLabel1, gridBagConstraints);
 
         folioU.setText("Ingrese el folio del usuario");
+        folioU.setPreferredSize(new java.awt.Dimension(140, 22));
+        folioU.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                folioUFocusGained(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 30);
+        background.add(folioU, gridBagConstraints);
 
         jSeparator2.setBackground(new java.awt.Color(15, 110, 86));
         jSeparator2.setForeground(new java.awt.Color(15, 110, 86));
         jSeparator2.setToolTipText("");
         jSeparator2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
         jSeparator2.setPreferredSize(new java.awt.Dimension(280, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(5, 6, 0, 30);
+        background.add(jSeparator2, gridBagConstraints);
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Libro ID");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 30);
+        background.add(jLabel2, gridBagConstraints);
 
         libroID.setText("Ingrese el ID del Libro a prestar");
+        libroID.setPreferredSize(new java.awt.Dimension(140, 22));
+        libroID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                libroIDFocusGained(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 30);
+        background.add(libroID, gridBagConstraints);
+        libroID.getAccessibleContext().setAccessibleDescription("");
 
         jButton1.setText("Prestar");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -106,61 +192,26 @@ public class Prestamos extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.6;
+        gridBagConstraints.insets = new java.awt.Insets(30, 6, 30, 30);
+        background.add(jButton1, gridBagConstraints);
 
+        subtitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         subtitulo.setText("Prestamo de Libro");
-
-        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(79, 79, 79))
-                    .addComponent(subtitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, backgroundLayout.createSequentialGroup()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(libroID, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(folioU, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(239, 239, 239))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(211, 211, 211)))
-                        .addGap(39, 39, 39)))
-                .addGap(26, 26, 26))
-        );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(subtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(folioU, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(libroID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        libroID.getAccessibleContext().setAccessibleDescription("");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(10, 6, 0, 30);
+        background.add(subtitulo, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -170,7 +221,7 @@ public class Prestamos extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -224,6 +275,7 @@ public class Prestamos extends javax.swing.JPanel {
             DAOprestamo.prestar(prestamoActual);
             libroPrestamo.setAvailable(libroPrestamo.getAvailable() - 1);
             daoLibro.modificar(libroPrestamo);
+            DAOprestamo.obtenerPrestamosTotales(libroPrestamo.getId());
             JOptionPane.showMessageDialog(null, "Prestamo Realizado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al prestar el libro.", "AVISO", 0);
@@ -232,6 +284,14 @@ public class Prestamos extends javax.swing.JPanel {
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void folioUFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folioUFocusGained
+        folioU.setText("");
+    }//GEN-LAST:event_folioUFocusGained
+
+    private void libroIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_libroIDFocusGained
+        libroID.setText("");
+    }//GEN-LAST:event_libroIDFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

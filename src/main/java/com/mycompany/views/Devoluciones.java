@@ -15,10 +15,8 @@ import com.mycompany.models.PrestamosM;
 import com.mycompany.models.UsuariosM;
 import com.mycompany.utils.utils;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -33,25 +31,38 @@ public class Devoluciones extends javax.swing.JPanel {
      */
     public Devoluciones() {
         initComponents();
-        InitStyles();
+        initStyles();
+        initImage();
     }
     
-    private void InitStyles(){
+    private void initStyles(){
         subtitulo.putClientProperty("FlatLaf.styleClass", "h1");
         jLabel1.putClientProperty("FlatLaf.styleClass", "h3");
         jLabel2.putClientProperty("FlatLaf.styleClass", "h3");
         folioU.putClientProperty("FlatLaf.styleClass", "h4");
         libroID.putClientProperty("FlatLaf.styleClass", "h4");
         jButton1.putClientProperty("FlatLaf.styleClass", "h4");
-        try {
-            BufferedImage originalImage = ImageIO.read(new File("C:\\Users\\sbeck\\OneDrive\\Documentos\\NetBeansProjects\\ILibreria\\src\\main\\resources\\Stack.png"));
-            int desiredWidth = 380;
-            int desiredHeight = 260;
-            Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-            imagen.setIcon(new ImageIcon(resizedImage));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
+        //ImageIcon icon = new ImageIcon(getClass().getResource("/Stack.png"));
+        //Image resizedImage = icon.getImage().getScaledInstance(imagen.getWidth(), imagen.getHeight(), Image.SCALE_SMOOTH);
+        //imagen.setIcon(new ImageIcon(resizedImage));
+    }
+    
+    private void initImage(){
+        imagen.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Se asegura de que solo se ejecute una vez, cuando las dimensiones sean mayores que 0
+                if (imagen.getWidth() > 0 && imagen.getHeight() > 0) {
+                    // Carga la imagen 
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Stack.png"));
+                    Image resizedImage = icon.getImage().getScaledInstance(imagen.getWidth(), imagen.getHeight(), Image.SCALE_SMOOTH);
+                    imagen.setIcon(new ImageIcon(resizedImage));
+    
+                    // Remueve el listener una vez que el icono ha sido establecido
+                    imagen.removeComponentListener(this);
+                }
+            }
+        });
     }
 
     /**
@@ -62,9 +73,9 @@ public class Devoluciones extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         background = new javax.swing.JPanel();
-        imagen = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         folioU = new javax.swing.JTextField();
@@ -73,100 +84,148 @@ public class Devoluciones extends javax.swing.JPanel {
         libroID = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         subtitulo = new javax.swing.JLabel();
+        imagen = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(750, 430));
 
-        imagen.setPreferredSize(new java.awt.Dimension(300, 245));
+        background.setMinimumSize(new java.awt.Dimension(750, 370));
+        background.setLayout(new java.awt.GridBagLayout());
 
         jSeparator1.setBackground(new java.awt.Color(15, 110, 86));
         jSeparator1.setForeground(new java.awt.Color(15, 110, 86));
         jSeparator1.setToolTipText("");
         jSeparator1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
         jSeparator1.setPreferredSize(new java.awt.Dimension(280, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 279;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.insets = new java.awt.Insets(6, 9, 0, 11);
+        background.add(jSeparator1, gridBagConstraints);
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Folio Usuario");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 10);
+        background.add(jLabel1, gridBagConstraints);
 
-        folioU.setText("Ingrese el folio del usuario");
+        folioU.setText("Ingrese el ID del usuario");
+        folioU.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                folioUFocusGained(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 10);
+        background.add(folioU, gridBagConstraints);
 
         jSeparator2.setBackground(new java.awt.Color(15, 110, 86));
         jSeparator2.setForeground(new java.awt.Color(15, 110, 86));
         jSeparator2.setToolTipText("");
         jSeparator2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
         jSeparator2.setPreferredSize(new java.awt.Dimension(280, 2));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 279;
+        gridBagConstraints.ipady = 1;
+        gridBagConstraints.insets = new java.awt.Insets(6, 10, 0, 10);
+        background.add(jSeparator2, gridBagConstraints);
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Libro ID");
+        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.2;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 10);
+        background.add(jLabel2, gridBagConstraints);
 
         libroID.setText("Ingrese el ID del Libro a prestar");
+        libroID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                libroIDFocusGained(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 0, 10);
+        background.add(libroID, gridBagConstraints);
+        libroID.getAccessibleContext().setAccessibleDescription("");
 
         jButton1.setText("Devolver");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setMaximumSize(new java.awt.Dimension(76, 40));
+        jButton1.setMinimumSize(new java.awt.Dimension(76, 40));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.6;
+        gridBagConstraints.insets = new java.awt.Insets(30, 10, 30, 10);
+        background.add(jButton1, gridBagConstraints);
 
+        subtitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         subtitulo.setText("Devolucion de Libro");
+        subtitulo.setToolTipText("");
+        subtitulo.setFocusable(false);
+        subtitulo.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        subtitulo.setIconTextGap(0);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 0, 10);
+        background.add(subtitulo, gridBagConstraints);
 
-        javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
-        background.setLayout(backgroundLayout);
-        backgroundLayout.setHorizontalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(libroID, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(211, 211, 211))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, backgroundLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(239, 239, 239))
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(folioU)))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(31, 31, 31))
-                    .addGroup(backgroundLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(subtitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(38, 38, 38)
-                .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
-        );
-        backgroundLayout.setVerticalGroup(
-            backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(imagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(backgroundLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(subtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(folioU, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(libroID, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-
-        libroID.getAccessibleContext().setAccessibleDescription("");
+        imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imagen.setMinimumSize(new java.awt.Dimension(400, 350));
+        imagen.setPreferredSize(new java.awt.Dimension(400, 350));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.6;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 10, 10, 10);
+        background.add(imagen, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(background, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,26 +259,36 @@ public class Devoluciones extends javax.swing.JPanel {
             }
             
             //Validar si el usuario tiene devoluciones pendientes
-            PrestamosM prestamo = new PrestamosM();
+            PrestamosM prestamoDev = new PrestamosM();
             DAOPrestamos DAOprestamo = new DAOPrestamosImpl();
-            prestamo = DAOprestamo.obtenerPrestamo(usuarioPrestamo.getId(), libroPrestamo.getId());
-            if (prestamo == null){
+            prestamoDev = DAOprestamo.obtenerPrestamo(usuarioPrestamo.getId(), libroPrestamo.getId());
+            if (prestamoDev == null){
                 JOptionPane.showMessageDialog(this, "No hay prestamo a devolver.", "AVISO", 0);
                 libroID.requestFocus();
                 return;
             }
+            
+            System.out.println(prestamoDev.getId());
         
-            prestamo.setDate_return(utils.fechaActual());
+            prestamoDev.setDate_return(utils.fechaActual());
         
-            DAOprestamo.devolver(prestamo);
+            DAOprestamo.devolver(prestamoDev);
             libroPrestamo.setAvailable(libroPrestamo.getAvailable() + 1);
             daoLibro.modificar(libroPrestamo);
             JOptionPane.showMessageDialog(null, "Devolucion Realizada Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al devolver el libro.", "AVISO", 0);
             System.out.println(e.getMessage());
-        }
+        }  
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void folioUFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folioUFocusGained
+        folioU.setText("");
+    }//GEN-LAST:event_folioUFocusGained
+
+    private void libroIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_libroIDFocusGained
+        libroID.setText("");
+    }//GEN-LAST:event_libroIDFocusGained
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

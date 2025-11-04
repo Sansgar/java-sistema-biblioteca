@@ -5,12 +5,9 @@
 package com.mycompany.views;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,6 +21,7 @@ public class Principal extends javax.swing.JPanel {
     public Principal() {
         initComponents();
         InitStyles();
+        initImage();
     }
     
     private void InitStyles(){
@@ -38,15 +36,24 @@ public class Principal extends javax.swing.JPanel {
         jLabel9.putClientProperty("FlatLaf.styleClass", "h4");
         jLabel10.putClientProperty("FlatLaf.styleClass", "h4");
         jLabel11.putClientProperty("FlatLaf.styleClass", "h4");
-        try {
-            BufferedImage originalImage = ImageIO.read(new File("C:\\Users\\sbeck\\OneDrive\\Documentos\\NetBeansProjects\\ILibreria\\src\\main\\resources\\Book.png"));
-            int desiredWidth = 300;
-            int desiredHeight = 245;
-            Image resizedImage = originalImage.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
-            imagen.setIcon(new ImageIcon(resizedImage));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex);
-        }
+    }
+    
+    private void initImage(){
+        imagen.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Se asegura de que solo se ejecute una vez, cuando las dimensiones sean mayores que 0
+                if (imagen.getWidth() > 0 && imagen.getHeight() > 0) {
+                    // Carga la imagen 
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Book.png"));
+                    Image resizedImage = icon.getImage().getScaledInstance(imagen.getWidth(), imagen.getHeight(), Image.SCALE_SMOOTH);
+                    imagen.setIcon(new ImageIcon(resizedImage));
+    
+                    // Remueve el listener una vez que el icono ha sido establecido
+                    imagen.removeComponentListener(this);
+                }
+            }
+        });
     }
 
     /**

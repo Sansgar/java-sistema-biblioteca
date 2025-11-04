@@ -87,6 +87,7 @@ public class DAOPrestamosImpl extends Database implements DAOPrestamos {
             pst.setInt(1, userId);
             pst.setInt(2, bookId);
             ResultSet rs = pst.executeQuery();
+            prestamo = new PrestamosM();
             while(rs.next()){
                 prestamo.setId(rs.getInt("id"));
                 prestamo.setUser_id(rs.getInt("user_id"));
@@ -103,6 +104,26 @@ public class DAOPrestamosImpl extends Database implements DAOPrestamos {
             this.Cerrar();
         }
         return prestamo;
+    }
+
+    @Override
+    public int obtenerPrestamosTotales(int BookId) {
+        int totalPrestamos = 0;
+        try {
+            this.Conectar();
+            PreparedStatement pst = this.coneccion.prepareStatement("SELECT COUNT(*) AS totalP FROM `lendings` WHERE `book_id` = ? AND `date_return` IS NULL;");
+            pst.setInt(1, BookId);
+            ResultSet rs = pst.executeQuery();
+            rs.next();
+            totalPrestamos = rs.getInt("totalP");
+            rs.close();
+            pst.close();
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex.getMessage());
+        } finally{
+            this.Cerrar();
+        }
+        return totalPrestamos;
     }
     
 }

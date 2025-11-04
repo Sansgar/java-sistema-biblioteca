@@ -231,10 +231,8 @@ public class UpdateUsuarios extends javax.swing.JPanel {
             DAOUsuarios dao = new DAOUsuariosImpl();
             if(isEdition){
                 dao.modificar(user);
-                JOptionPane.showMessageDialog(null, "Usuario Modificado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             } else {
                 dao.registrar(user);
-                JOptionPane.showMessageDialog(null, "Usuario Registrado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
                 nombreU.setText("");
                 apellidoU.setText("");
                 domicilioU.setText("");

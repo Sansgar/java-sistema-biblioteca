@@ -16,4 +16,5 @@ public interface DAOPrestamos {
     public void devolver(PrestamosM prestamo);
     public PrestamosM obtenerPrestamo (int userId, int bookId);
     public List<PrestamosM> listar();
+    public int obtenerPrestamosTotales (int BookId);
 }

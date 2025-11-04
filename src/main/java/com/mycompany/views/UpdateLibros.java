@@ -5,7 +5,9 @@
 package com.mycompany.views;
 
 import com.company.interfaces.DAOLibros;
+import com.company.interfaces.DAOPrestamos;
 import com.mycompany.ilibreria.DAOLibrosImpl;
+import com.mycompany.ilibreria.DAOPrestamosImpl;
 import static com.mycompany.ilibreria.Dashboard.ShowJPanel;
 import com.mycompany.models.LibrosM;
 import javax.swing.JOptionPane;
@@ -36,7 +38,6 @@ public class UpdateLibros extends javax.swing.JPanel {
     private void InitStyles(){
         subtitulo.putClientProperty("FlatLaf.styleClass", "h1");
         jLLibroTitulo.putClientProperty("FlatLaf.styleClass", "default");
-        JLLibroDisponibles.putClientProperty("FlatLaf.styleClass", "h3");
         JLLibroEdicion.putClientProperty("FlatLaf.styleClass", "h3");
         jLLibroAutor.putClientProperty("FlatLaf.styleClass", "h3");
         jLLibroCategoria.putClientProperty("FlatLaf.styleClass", "h3");
@@ -61,7 +62,6 @@ public class UpdateLibros extends javax.swing.JPanel {
             libroFP.setText(bookInfo.getDate());
             libroEdicion.setText(bookInfo.getEdit());
             libroStock.setText(String.valueOf(bookInfo.getStock()));
-            libroDisponibles.setText(String.valueOf(bookInfo.getAvailable()));
         }
     }
 
@@ -79,38 +79,25 @@ public class UpdateLibros extends javax.swing.JPanel {
         subtitulo = new javax.swing.JLabel();
         jLLibroIdioma = new javax.swing.JLabel();
         libroIdioma = new javax.swing.JTextField();
-        jSeparator1 = new javax.swing.JSeparator();
         jLLibroTitulo = new javax.swing.JLabel();
         jLLibroPaginas = new javax.swing.JLabel();
         libroTitulo = new javax.swing.JTextField();
         libroPaginas = new javax.swing.JTextField();
-        jSeparator2 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
         jLLibroAutor = new javax.swing.JLabel();
         jLLibroDescripcion = new javax.swing.JLabel();
         libroAutor = new javax.swing.JTextField();
         libroDescripcion = new javax.swing.JTextField();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator11 = new javax.swing.JSeparator();
         jLLibroCategoria = new javax.swing.JLabel();
         jLLibroISBN = new javax.swing.JLabel();
         libroCategoria = new javax.swing.JTextField();
         libroISBN = new javax.swing.JTextField();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
         jLLibroFP = new javax.swing.JLabel();
         JLLibroEdicion = new javax.swing.JLabel();
         jLLibroStock = new javax.swing.JLabel();
-        JLLibroDisponibles = new javax.swing.JLabel();
-        libroFP = new javax.swing.JTextField();
         libroEdicion = new javax.swing.JTextField();
         libroStock = new javax.swing.JTextField();
-        libroDisponibles = new javax.swing.JTextField();
-        jSeparator3 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
-        jSeparator9 = new javax.swing.JSeparator();
         jButtonUsuarioUpdate = new javax.swing.JButton();
+        libroFP = new com.github.lgooddatepicker.components.DatePicker();
 
         setPreferredSize(new java.awt.Dimension(750, 430));
 
@@ -125,6 +112,7 @@ public class UpdateLibros extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
         background.add(subtitulo, gridBagConstraints);
@@ -151,19 +139,6 @@ public class UpdateLibros extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 0);
         background.add(libroIdioma, gridBagConstraints);
 
-        jSeparator1.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator1.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator1.setToolTipText("");
-        jSeparator1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator1.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
-        background.add(jSeparator1, gridBagConstraints);
-
         jLLibroTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLLibroTitulo.setText("Titulo");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -180,7 +155,7 @@ public class UpdateLibros extends javax.swing.JPanel {
         jLLibroPaginas.setText("Paginas");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.3;
@@ -200,45 +175,19 @@ public class UpdateLibros extends javax.swing.JPanel {
         libroPaginas.setPreferredSize(new java.awt.Dimension(300, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 0);
         background.add(libroPaginas, gridBagConstraints);
 
-        jSeparator2.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator2.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator2.setToolTipText("");
-        jSeparator2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator2.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 5);
-        background.add(jSeparator2, gridBagConstraints);
-
-        jSeparator8.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator8.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator8.setToolTipText("");
-        jSeparator8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator8.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
-        background.add(jSeparator8, gridBagConstraints);
-
         jLLibroAutor.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLLibroAutor.setText("Autor");
         jLLibroAutor.setPreferredSize(new java.awt.Dimension(140, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.3;
@@ -253,9 +202,10 @@ public class UpdateLibros extends javax.swing.JPanel {
         jLLibroDescripcion.setPreferredSize(new java.awt.Dimension(140, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.weightx = 0.25;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 5);
         background.add(jLLibroDescripcion, gridBagConstraints);
@@ -263,7 +213,7 @@ public class UpdateLibros extends javax.swing.JPanel {
         libroAutor.setPreferredSize(new java.awt.Dimension(300, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.5;
@@ -273,45 +223,19 @@ public class UpdateLibros extends javax.swing.JPanel {
         libroDescripcion.setPreferredSize(new java.awt.Dimension(300, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 0);
         background.add(libroDescripcion, gridBagConstraints);
 
-        jSeparator4.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator4.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator4.setToolTipText("");
-        jSeparator4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator4.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 5);
-        background.add(jSeparator4, gridBagConstraints);
-
-        jSeparator11.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator11.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator11.setToolTipText("");
-        jSeparator11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator11.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        background.add(jSeparator11, gridBagConstraints);
-
         jLLibroCategoria.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLLibroCategoria.setText("Categoria");
         jLLibroCategoria.setPreferredSize(new java.awt.Dimension(140, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.3;
@@ -323,7 +247,7 @@ public class UpdateLibros extends javax.swing.JPanel {
         jLLibroISBN.setPreferredSize(new java.awt.Dimension(300, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.3;
@@ -333,7 +257,7 @@ public class UpdateLibros extends javax.swing.JPanel {
         libroCategoria.setPreferredSize(new java.awt.Dimension(300, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.5;
@@ -343,61 +267,37 @@ public class UpdateLibros extends javax.swing.JPanel {
         libroISBN.setPreferredSize(new java.awt.Dimension(300, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 0);
         background.add(libroISBN, gridBagConstraints);
 
-        jSeparator5.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator5.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator5.setToolTipText("");
-        jSeparator5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator5.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 5);
-        background.add(jSeparator5, gridBagConstraints);
-
-        jSeparator7.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator7.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator7.setToolTipText("");
-        jSeparator7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator7.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 12;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
-        background.add(jSeparator7, gridBagConstraints);
-
         jLLibroFP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLLibroFP.setText("Fecha de Publicacion");
         jLLibroFP.setPreferredSize(new java.awt.Dimension(155, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 11;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 5);
         background.add(jLLibroFP, gridBagConstraints);
 
         JLLibroEdicion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         JLLibroEdicion.setText("Edicion");
         JLLibroEdicion.setPreferredSize(new java.awt.Dimension(155, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         background.add(JLLibroEdicion, gridBagConstraints);
 
         jLLibroStock.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -405,116 +305,43 @@ public class UpdateLibros extends javax.swing.JPanel {
         jLLibroStock.setPreferredSize(new java.awt.Dimension(155, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 13;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
-        background.add(jLLibroStock, gridBagConstraints);
-
-        JLLibroDisponibles.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        JLLibroDisponibles.setText("Disponibles");
-        JLLibroDisponibles.setPreferredSize(new java.awt.Dimension(155, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 13;
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        background.add(JLLibroDisponibles, gridBagConstraints);
+        background.add(jLLibroStock, gridBagConstraints);
 
-        libroFP.setPreferredSize(new java.awt.Dimension(155, 20));
+        libroEdicion.setMinimumSize(new java.awt.Dimension(150, 22));
+        libroEdicion.setPreferredSize(new java.awt.Dimension(150, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(3, 0, 0, 5);
-        background.add(libroFP, gridBagConstraints);
-
-        libroEdicion.setPreferredSize(new java.awt.Dimension(155, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 14;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 5);
         background.add(libroEdicion, gridBagConstraints);
 
+        libroStock.setMinimumSize(new java.awt.Dimension(150, 22));
         libroStock.setPreferredSize(new java.awt.Dimension(140, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 14;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 0.5;
-        gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 5);
-        background.add(libroStock, gridBagConstraints);
-
-        libroDisponibles.setPreferredSize(new java.awt.Dimension(140, 20));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 14;
+        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 0.5;
         gridBagConstraints.weighty = 0.5;
         gridBagConstraints.insets = new java.awt.Insets(3, 5, 0, 0);
-        background.add(libroDisponibles, gridBagConstraints);
-
-        jSeparator3.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator3.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator3.setToolTipText("");
-        jSeparator3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator3.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 5);
-        background.add(jSeparator3, gridBagConstraints);
-
-        jSeparator6.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator6.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator6.setToolTipText("");
-        jSeparator6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator6.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 5);
-        background.add(jSeparator6, gridBagConstraints);
-
-        jSeparator10.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator10.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator10.setToolTipText("");
-        jSeparator10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator10.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 5);
-        background.add(jSeparator10, gridBagConstraints);
-
-        jSeparator9.setBackground(new java.awt.Color(15, 110, 86));
-        jSeparator9.setForeground(new java.awt.Color(15, 110, 86));
-        jSeparator9.setToolTipText("");
-        jSeparator9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 110, 86), 2, true));
-        jSeparator9.setPreferredSize(new java.awt.Dimension(280, 2));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 15;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(6, 5, 0, 0);
-        background.add(jSeparator9, gridBagConstraints);
+        background.add(libroStock, gridBagConstraints);
 
         jButtonUsuarioUpdate.setText("Registrar");
         jButtonUsuarioUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonUsuarioUpdate.setPreferredSize(new java.awt.Dimension(220, 40));
+        jButtonUsuarioUpdate.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonUsuarioUpdate.setMinimumSize(new java.awt.Dimension(300, 23));
+        jButtonUsuarioUpdate.setPreferredSize(new java.awt.Dimension(300, 40));
         jButtonUsuarioUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUsuarioUpdateActionPerformed(evt);
@@ -522,11 +349,23 @@ public class UpdateLibros extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 17;
+        gridBagConstraints.gridy = 13;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.insets = new java.awt.Insets(20, 5, 20, 5);
         background.add(jButtonUsuarioUpdate, gridBagConstraints);
+
+        libroFP.setMinimumSize(new java.awt.Dimension(200, 21));
+        libroFP.setPreferredSize(new java.awt.Dimension(200, 21));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 12;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.weightx = 0.25;
+        gridBagConstraints.weighty = 0.3;
+        gridBagConstraints.insets = new java.awt.Insets(4, 0, 4, 0);
+        background.add(libroFP, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -551,12 +390,16 @@ public class UpdateLibros extends javax.swing.JPanel {
         String fechaP =  libroFP.getText().trim();
         String edicion =  libroEdicion.getText().trim();
         String stock =  libroStock.getText().trim();
-        String disponible =  libroDisponibles.getText().trim();
         
-        System.out.println(titulo);
-        if(titulo.isEmpty() || idioma.isEmpty() || autor.isEmpty() || paginas.isEmpty() || descripcion.isEmpty() || categoria.isEmpty() || ISBN.isEmpty() || fechaP.isEmpty() || edicion.isEmpty()|| stock.isEmpty()|| disponible.isEmpty()){
+        if(titulo.isEmpty() || idioma.isEmpty() || autor.isEmpty() || paginas.isEmpty() || descripcion.isEmpty() || categoria.isEmpty() || ISBN.isEmpty() || fechaP.isEmpty() || edicion.isEmpty()|| stock.isEmpty()){
             JOptionPane.showMessageDialog(null, "Debe llenar todos los campos!", "AVISO", 0);
-            jLLibroTitulo.requestFocus();
+            libroTitulo.requestFocus();
+            return;
+        }
+        
+        if(Integer.parseInt(paginas) <= 0){
+            JOptionPane.showMessageDialog(null, "Paginas tiene que ser mayor a 0!", "AVISO", 0);
+            libroPaginas.requestFocus();
             return;
         }
         
@@ -572,15 +415,19 @@ public class UpdateLibros extends javax.swing.JPanel {
         book.setDate(fechaP);
         book.setEdit(edicion);
         book.setStock(Integer.parseInt(stock));
-        book.setAvailable(Integer.parseInt(disponible));
+        DAOPrestamos daoPrestamos = new DAOPrestamosImpl();
+        int disponibles = book.getStock() - daoPrestamos.obtenerPrestamosTotales(book.getId());
+        if (disponibles < 0){
+            JOptionPane.showMessageDialog(null, "Stock menor a la cantidad de libros prestados! \n Por favor ingresar numero igual o mayor a " + daoPrestamos.obtenerPrestamosTotales(book.getId()), "AVISO", 0);
+            return;
+            }
+        book.setAvailable(disponibles);
         try {
             DAOLibros dao = new DAOLibrosImpl();
             if(isEdition){
                 dao.modificar(book);
-                JOptionPane.showMessageDialog(null, "Libro Modificado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             } else {
                 dao.registrar(book);
-                JOptionPane.showMessageDialog(null, "Libro Registrado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
             ShowJPanel(new Libros());
             
@@ -592,7 +439,6 @@ public class UpdateLibros extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JLLibroDisponibles;
     private javax.swing.JLabel JLLibroEdicion;
     private javax.swing.JPanel background;
     private javax.swing.JButton jButtonUsuarioUpdate;
@@ -605,23 +451,11 @@ public class UpdateLibros extends javax.swing.JPanel {
     private javax.swing.JLabel jLLibroPaginas;
     private javax.swing.JLabel jLLibroStock;
     private javax.swing.JLabel jLLibroTitulo;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField libroAutor;
     private javax.swing.JTextField libroCategoria;
     private javax.swing.JTextField libroDescripcion;
-    private javax.swing.JTextField libroDisponibles;
     private javax.swing.JTextField libroEdicion;
-    private javax.swing.JTextField libroFP;
+    private com.github.lgooddatepicker.components.DatePicker libroFP;
     private javax.swing.JTextField libroISBN;
     private javax.swing.JTextField libroIdioma;
     private javax.swing.JTextField libroPaginas;

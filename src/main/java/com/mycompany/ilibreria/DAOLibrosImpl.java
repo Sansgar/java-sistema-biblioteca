@@ -12,12 +12,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author sbeck
  */
 public class DAOLibrosImpl extends Database implements DAOLibros {
+    final int DUPLICATE_KEY_ERROR_CODE = 1062;
 
     @Override
     public void registrar(LibrosM book) {
@@ -36,8 +38,12 @@ public class DAOLibrosImpl extends Database implements DAOLibros {
             pst.setInt(10, (int) book.getAvailable());
             pst.setString(11, book.getISBN());
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Libro Registrado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
+            if ( ((SQLException)e).getErrorCode() == DUPLICATE_KEY_ERROR_CODE) {
+                JOptionPane.showMessageDialog(null, "No puede haber numero de ISBN duplicados!", "AVISO", 0);
+            }
         } finally {
             this.Cerrar();
         }
@@ -47,7 +53,7 @@ public class DAOLibrosImpl extends Database implements DAOLibros {
     public void modificar(LibrosM book) {
         try {
             this.Conectar();
-            
+       
             PreparedStatement pst = this.coneccion.prepareStatement("UPDATE books SET title = ?, date = ?, author = ?, category = ?, edit = ?, lang = ?, pages = ?, description = ?, stock = ?, available = ?, ISBN = ? WHERE id = ?");
             pst.setString(1, book.getTitle());
             pst.setString(2, book.getDate());
@@ -62,11 +68,15 @@ public class DAOLibrosImpl extends Database implements DAOLibros {
             pst.setString(11, book.getISBN());
             pst.setInt(12, book.getId());
             pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Libro Modificado Exitosamente", "AVISO", javax.swing.JOptionPane.INFORMATION_MESSAGE);
         } catch (ClassNotFoundException | SQLException e) {
+            if ( ((SQLException)e).getErrorCode() == DUPLICATE_KEY_ERROR_CODE) {
+                JOptionPane.showMessageDialog(null, "No puede haber numero de ISBN duplicados!", "AVISO", 0);
+            }
             System.out.println(e.getMessage());
         } finally {
             this.Cerrar();
-        }
+        }  
     }
 
     @Override
